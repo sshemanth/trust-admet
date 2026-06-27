@@ -9,6 +9,7 @@ from xgboost import XGBClassifier, XGBRegressor
 
 from trust_admet.data.featurize import dataframe_to_fingerprints
 from trust_admet.utils.metrics import classification_metrics, regression_metrics
+from trust_admet.utils.calibration import calibration_metrics
 
 
 CLASSIFICATION_DATASETS = {
@@ -149,6 +150,33 @@ def main():
 
     model_path = output_dir / f"seed{args.seed}.joblib"
     joblib.dump(model, model_path)
+
+    if task_type == "classification":
+        pred_rows = []
+        for split_name, split_df, x, y in [
+            ("train", train_df, x_train, y_train),
+            ("valid", valid_df, x_valid, y_valid),
+            ("test", test_df, x_test, y_test),
+        ]:
+            y_prob = model.predict_proba(x)[:, 1]
+            cal = calibration_metrics(y, y_prob)
+
+            for k, v in cal.items():
+                metrics[f"{split_name}_{k}"] = v
+
+            tmp = split_df[["canonical_smiles", "Y"]].copy()
+            tmp["split"] = split_name
+            tmp["y_prob"] = y_prob
+            tmp["model"] = args.model
+            tmp["dataset"] = args.dataset
+            tmp["split_method"] = args.split
+            tmp["seed"] = args.seed
+            pred_rows.append(tmp)
+
+        pred_df = pd.concat(pred_rows, ignore_index=True)
+        pred_path = output_dir / f"seed{args.seed}_predictions.csv"
+        pred_df.to_csv(pred_path, index=False)
+        task.upload_artifact("predictions", str(pred_path))
 
     metrics_path = output_dir / f"seed{args.seed}_metrics.csv"
     pd.DataFrame([metrics]).to_csv(metrics_path, index=False)
