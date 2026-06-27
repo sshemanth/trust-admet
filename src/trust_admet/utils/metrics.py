@@ -35,8 +35,10 @@ def regression_metrics(y_true, y_pred):
     y_true = np.asarray(y_true)
     y_pred = np.asarray(y_pred)
 
+    mse = mean_squared_error(y_true, y_pred)
+
     return {
         "mae": mean_absolute_error(y_true, y_pred),
-        "rmse": mean_squared_error(y_true, y_pred, squared=False),
+        "rmse": float(np.sqrt(mse)),
         "r2": r2_score(y_true, y_pred),
     }
