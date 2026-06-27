@@ -1,0 +1,6 @@
+dataset: BBBP
+split: scaffold
+model: random_forest
+seed: 42
+n_bits: 2048
+radius: 2
