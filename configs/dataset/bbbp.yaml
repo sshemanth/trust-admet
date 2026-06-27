@@ -1,0 +1,8 @@
+name: BBBP
+tdc_name: BBBP
+task_type: classification
+split_methods:
+  - random
+  - scaffold
+smiles_column: Drug
+target_column: Y
