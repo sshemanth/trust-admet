@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+trust-admet-env/
+.ipynb_checkpoints/
+
+data/raw/
+data/processed/
+data/splits/
+outputs/
+*.pt
+*.pth
+*.ckpt
+*.pkl
+
+clearml.conf
