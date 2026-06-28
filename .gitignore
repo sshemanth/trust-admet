@@ -1,17 +1,47 @@
+# Python
 __pycache__/
 *.pyc
-.env
-.venv/
-trust-admet-env/
+*.pyo
+*.pyd
+.pytest_cache/
 .ipynb_checkpoints/
 
+# Environments
+.env
+.venv/
+venv/
+trust-admet-env/
+.env.*
+
+# Data
 data/raw/
 data/processed/
 data/splits/
+
+# Generated outputs
 outputs/
 *.pt
 *.pth
 *.ckpt
+*.joblib
 *.pkl
+*.npy
+*.npz
 
+# ClearML
 clearml.conf
+.clearml/
+
+# Logs
+*.log
+logs/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Hugging Face / caches
+.cache/
+hf_cache/
+wandb/
