@@ -1,16 +1,24 @@
 # TRUST-ADMET
 
-TRUST-ADMET is an open-source research framework for trustworthy ADMET prediction using molecular foundation models.
+**TRUST-ADMET** is a framework for trustworthy ADMET prediction that combines predictive performance with calibration, applicability-domain analysis, uncertainty estimation, and explainability.
 
-## Goals
+## Features
 
-- Molecular Foundation Models
-- Explainable AI
-- Uncertainty Quantification
-- Calibration
-- Scaffold Generalization
-- Regulatory-Oriented AI Evaluation
+- Classical ML (RF, XGBoost)
+- Neural Networks (MLP)
+- Graph Neural Networks (GCN, GIN)
+- Foundation Models (ChemBERTa)
+- Calibration Analysis
+- Applicability Domain
+- Monte Carlo Dropout Uncertainty
+- Automated Leaderboards
+- ClearML Integration
+- Reproducible Experiment Tracking
 
-## Status
+## Project Status
 
-🚧 Under active development.
+✅ Benchmark Complete
+
+✅ Trust Analysis Complete
+
+🚧 Explainability In Progress
