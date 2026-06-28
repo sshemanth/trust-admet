@@ -1,11 +1,57 @@
 import argparse
-from pathlib import Path
+import json
 
-import joblib
-import pandas as pd
+from trust_admet.trust.trust_engine import predict_with_trust
 
-from trust_admet.data.featurize import dataframe_to_fingerprints
-from trust_admet.trust.trust_profile import TrustProfile
+
+def print_report(result):
+    b = result["score_breakdown"]
+
+    print("=" * 70)
+    print("                       TRUST-ADMET REPORT")
+    print("=" * 70)
+    print()
+    print("Input Molecule")
+    print("--------------")
+    print(f"SMILES                   : {result['smiles']}")
+    print()
+    print("Model")
+    print("-----")
+    print(f"Dataset                  : {result['dataset']}")
+    print(f"Split                    : {result['split']}")
+    print(f"Model                    : {result['model']}")
+    print(f"Seed                     : {result['seed']}")
+    print()
+    print("Prediction")
+    print("----------")
+    print(f"Class                    : {result['label']}")
+    print(f"Probability BBB+         : {result['probability_positive']:.3f}")
+    print(f"Prediction Confidence    : {result['prediction_confidence']:.3f}")
+    print()
+    print("TRUST Score")
+    print("-----------")
+    print(f"Total                    : {result['trust_score']:.1f} / 100")
+    print(f"Level                    : {result['trust_level']}")
+    print()
+    print("Breakdown")
+    print("---------")
+    print(f"Prediction Confidence    : {b['prediction_confidence']:5.1f} / 25")
+    print(f"Calibration              : {b['calibration']:5.1f} / 25")
+    print(f"Applicability Domain     : {b['applicability_domain']:5.1f} / 25")
+    print(f"Uncertainty              : {b['uncertainty']:5.1f} / 25")
+    print()
+    print("Trust Signals")
+    print("-------------")
+    print(f"Applicability Domain     : {result['applicability_domain']}")
+    print(f"Nearest Similarity       : {result['nearest_similarity']:.3f}")
+    print(f"Uncertainty              : {result['uncertainty']:.3f}")
+    print(f"ECE                      : {result['ece']:.3f}")
+    print()
+    print("Recommendation")
+    print("--------------")
+    print(result["recommendation"])
+    print()
+    print("=" * 70)
 
 
 def main():
@@ -15,65 +61,21 @@ def main():
     parser.add_argument("--split", default="scaffold")
     parser.add_argument("--model", default="random_forest")
     parser.add_argument("--seed", default="42")
+    parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
-    model_path = (
-        Path("outputs/models")
-        / args.dataset
-        / args.split
-        / args.model
-        / f"seed{args.seed}.joblib"
+    result = predict_with_trust(
+        smiles=args.smiles,
+        dataset=args.dataset,
+        split=args.split,
+        model_name=args.model,
+        seed=args.seed,
     )
 
-    if not model_path.exists():
-        raise FileNotFoundError(f"Model not found: {model_path}")
-
-    model = joblib.load(model_path)
-
-    df = pd.DataFrame({"canonical_smiles": [args.smiles]})
-    x = dataframe_to_fingerprints(df)
-
-    if hasattr(model, "predict_proba"):
-        prob = float(model.predict_proba(x)[0, 1])
-        pred = int(prob >= 0.5)
-
-        # Temporary values; later we will compute these from AD + uncertainty modules.
-        similarity = 0.81
-        uncertainty = 0.02
-
-        trust = TrustProfile(
-            probability=prob,
-            similarity=similarity,
-            uncertainty=uncertainty,
-        )
-
-        print("=" * 60)
-        print("                 TRUST-ADMET REPORT")
-        print("=" * 60)
-        print(f"SMILES               : {args.smiles}")
-        print(f"Dataset              : {args.dataset}")
-        print(f"Model                : {args.model}")
-        print(f"Prediction           : {pred}")
-        print(f"Probability          : {prob:.3f}")
-        print()
-        print(f"Applicability Domain : {'Inside' if similarity >= 0.5 else 'Outside'}")
-        print(f"Nearest Similarity   : {similarity:.3f}")
-        print(f"Uncertainty          : {uncertainty:.3f}")
-        print()
-        print(f"Overall Confidence   : {trust.confidence}")
-        print(f"Recommendation       : {trust.recommendation}")
-        print("=" * 60)
-
+    if args.json:
+        print(json.dumps(result, indent=2))
     else:
-        pred = model.predict(x)[0]
-        print("=" * 60)
-        print("                 TRUST-ADMET REPORT")
-        print("=" * 60)
-        print(f"SMILES               : {args.smiles}")
-        print(f"Dataset              : {args.dataset}")
-        print(f"Model                : {args.model}")
-        print(f"Prediction           : {pred:.3f}")
-        print("=" * 60)
+        print_report(result)
 
 
 if __name__ == "__main__":
