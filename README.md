@@ -4,120 +4,198 @@
 
 ### **TRUSTworthy Artificial Intelligence Framework for ADMET Prediction**
 
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)]()
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)]()
+*Towards Reliable, Explainable and Deployable Molecular Property Prediction*
+
+<p>
+
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python\&logoColor=white)]()
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch\&logoColor=white)]()
 [![PyTorch Geometric](https://img.shields.io/badge/PyTorch%20Geometric-GNN-orange)]()
 [![Transformers](https://img.shields.io/badge/HuggingFace-Transformers-yellow?logo=huggingface)]()
 [![RDKit](https://img.shields.io/badge/RDKit-Cheminformatics-green)]()
+[![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?logo=fastapi)]()
+[![Gradio](https://img.shields.io/badge/Gradio-Web%20Demo-FF6F00)]()
+[![Docker](https://img.shields.io/badge/Docker-Deployment-2496ED?logo=docker\&logoColor=white)]()
 [![ClearML](https://img.shields.io/badge/ClearML-Experiment%20Tracking-blue)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)]()
+[![MIT License](https://img.shields.io/badge/License-MIT-success.svg)]()
+
+</p>
 
 ---
 
-### 🧪 Benchmark • 📊 Calibration • 🎯 Applicability Domain • 📉 Uncertainty • 🔬 Explainability
+### 🧪 Benchmark • 📊 Calibration • 🌐 Applicability Domain • 📉 Uncertainty • 🔬 Explainability • 🛡 Trustworthy AI
 
-*A unified framework for **trustworthy ADMET prediction** using Classical ML, Graph Neural Networks, and Molecular Foundation Models.*
+*A unified framework for trustworthy ADMET prediction using Classical Machine Learning, Graph Neural Networks, and Molecular Foundation Models.*
 
 </div>
 
 ---
 
+# 🚀 Highlights
+
+TRUST-ADMET goes beyond predictive performance by answering an equally important question:
+
+> **Can this prediction be trusted?**
+
+Unlike conventional ADMET benchmark repositories that primarily report AUROC or RMSE, TRUST-ADMET integrates multiple complementary trustworthiness components into a single reproducible framework.
+
+### ✨ Features
+
+* 🧠 Multiple AI paradigms
+
+  * Random Forest
+  * XGBoost
+  * Multilayer Perceptron (MLP)
+  * Graph Convolutional Networks (GCN)
+  * Graph Isomorphism Networks (GIN)
+  * ChemBERTa
+
+* 🧪 Multiple benchmark datasets
+
+* 📊 Calibration-aware prediction
+
+* 🌐 Applicability Domain analysis
+
+* 📉 Predictive uncertainty estimation
+
+* 🔬 Explainability
+
+* 🧪 External validation
+
+* ⚡ FastAPI deployment
+
+* 🎨 Interactive Gradio interface
+
+* 🐳 Docker support
+
+* 📈 Automated benchmark reports
+
+* 📄 Paper-ready figures and tables
+
+---
+
 # 📖 Overview
 
-TRUST-ADMET is an **end-to-end framework** for trustworthy molecular property prediction.
+TRUST-ADMET is an end-to-end framework for molecular property prediction with an emphasis on **trustworthy artificial intelligence**.
 
-Unlike conventional ADMET benchmarks that only report predictive accuracy, TRUST-ADMET evaluates **whether a prediction should be trusted** by integrating:
+The framework provides reproducible benchmarking across multiple model families while evaluating not only predictive accuracy but also calibration, applicability domain, uncertainty estimation, explainability, and deployment readiness.
 
-- 🎯 Predictive Performance
-- 📊 Calibration
-- 🌐 Applicability Domain
-- 📉 Predictive Uncertainty
-- 🔬 Explainability
+The project combines:
 
----
+* Classical Machine Learning
+* Deep Learning
+* Graph Neural Networks
+* Molecular Foundation Models
+* Trustworthy AI methodologies
+* Reproducible experimentation
+* Interactive deployment
 
-# ✨ Features
-
-## 🧬 Supported Models
-
-| Category | Models |
-|-----------|---------|
-| 🌲 Classical ML | Random Forest, XGBoost |
-| 🧠 Deep Learning | MLP |
-| 🔗 Graph Neural Networks | GCN, GIN |
-| 🤖 Foundation Models | ChemBERTa |
+into one unified research framework.
 
 ---
 
-## 📊 Supported Datasets
+# 🎯 Motivation
 
-### Classification
+High predictive accuracy alone is insufficient for molecular decision making.
 
-- BBBP
-- ClinTox
-- Tox21 NR-AR
-- Tox21 SR-p53
+Two molecules with identical predicted probabilities may differ dramatically in reliability due to:
 
-### Regression
+* being outside the training chemical space,
+* poor probability calibration,
+* disagreement across different models,
+* high predictive uncertainty,
+* or limited interpretability.
 
-- Lipophilicity
-- AqSolDB Solubility
-
----
-
-# 🛡 Trust Framework
-
-TRUST-ADMET evaluates every prediction using five complementary dimensions.
-
-| Component | Description |
-|------------|-------------|
-| 🎯 Performance | AUROC / RMSE |
-| 📊 Calibration | Brier Score, ECE, NLL |
-| 🌐 Applicability Domain | Tanimoto Similarity |
-| 📉 Uncertainty | Monte Carlo Dropout |
-| 🔬 Explainability | SHAP, Integrated Gradients, GNNExplainer |
+TRUST-ADMET addresses these challenges by integrating trust-aware decision support directly into the prediction pipeline.
 
 ---
 
-# 🏗 Project Architecture
+# 🛡 TRUST Framework
 
+Every prediction is evaluated through complementary trust dimensions.
+
+| Component                 | Purpose                                     |
+| ------------------------- | ------------------------------------------- |
+| 🎯 Predictive Performance | AUROC, AUPRC, RMSE, MAE                     |
+| 📊 Calibration            | ECE, Brier Score, Negative Log-Likelihood   |
+| 🌐 Applicability Domain   | Similarity + Physicochemical Space          |
+| 📉 Uncertainty            | Monte Carlo Dropout + Ensemble Disagreement |
+| 🔬 Explainability         | SHAP, Integrated Gradients, GNNExplainer    |
+| 🧪 External Validation    | Independent benchmark datasets              |
+| 🤖 Deployment             | FastAPI + Gradio + Docker                   |
+
+---
+
+# 🏗 Framework Overview
+
+```text
+                    Raw Molecular Datasets
+                              │
+                              ▼
+                     Dataset Validation
+                              │
+                              ▼
+                  Canonical SMILES Generation
+                              │
+                              ▼
+                 Random / Scaffold Splitting
+                              │
+                              ▼
+                     Molecular Representation
+           ┌──────────────────┼──────────────────┐
+           │                  │                  │
+           ▼                  ▼                  ▼
+ Morgan Fingerprints     Molecular Graphs    SMILES Tokens
+           │                  │                  │
+           └──────────────┬───┴──────────────────┘
+                          ▼
+                   Model Training Pipeline
+      ┌────────────┬────────────┬────────────┬────────────┐
+      │            │            │            │            │
+      ▼            ▼            ▼            ▼            ▼
+ RandomForest   XGBoost        MLP          GNN       ChemBERTa
+                                           (GCN/GIN)
+                          │
+                          ▼
+                Trust Evaluation Framework
+      ┌────────────┬────────────┬────────────┬────────────┐
+      │            │            │            │
+      ▼            ▼            ▼            ▼
+ Calibration   Applicability  Uncertainty  Explainability
+                          │
+                          ▼
+               TRUST Decision & Reporting
+                          │
+                          ▼
+        CLI • REST API • Gradio • Paper Figures
 ```
-                Raw Datasets
-                     │
-                     ▼
-            Data Validation
-                     │
-                     ▼
-          Canonicalization
-                     │
-                     ▼
-      Random / Scaffold Split
-                     │
-                     ▼
-          Feature Generation
-      ├── Morgan Fingerprints
-      ├── Molecular Graphs
-      └── SMILES Tokens
-                     │
-                     ▼
-             Model Training
-     ├── Random Forest
-     ├── XGBoost
-     ├── MLP
-     ├── GCN
-     ├── GIN
-     └── ChemBERTa
-                     │
-                     ▼
-         Trust Evaluation
-     ├── Calibration
-     ├── Applicability Domain
-     ├── Uncertainty
-     └── Explainability
-                     │
-                     ▼
-      TRUST Profile + Reports
-```
+
+---
+
+# 📊 Supported Models
+
+| Category                       | Models                 |
+| ------------------------------ | ---------------------- |
+| 🌲 Classical Machine Learning  | Random Forest, XGBoost |
+| 🧠 Neural Networks             | MLP                    |
+| 🔗 Graph Neural Networks       | GCN, GIN               |
+| 🤖 Molecular Foundation Models | ChemBERTa              |
+
+---
+
+# 🧪 Supported Datasets
+
+## Classification
+
+* BBBP
+* ClinTox
+* Tox21 NR-AR
+* Tox21 SR-p53
+
+## Regression
+
+* Lipophilicity
+* AqSolDB Solubility
 
 ---
 
@@ -126,65 +204,93 @@ TRUST-ADMET evaluates every prediction using five complementary dimensions.
 ```text
 trust-admet/
 
-├── configs/
-├── data/
+├── api/                    # FastAPI service
+├── app/                    # Gradio application
+├── configs/                # Experiment configurations
+├── data/                   # Datasets
 ├── docs/
-├── notebooks/
 ├── outputs/
 ├── paper/
+│   ├── figures/
+│   └── tables/
 ├── scripts/
 ├── src/
+│   └── trust_admet/
 ├── tests/
-│
+
+├── Dockerfile
+├── docker-compose.yml
 ├── README.md
 ├── LICENSE
 ├── CITATION.cff
-└── environment.yml
+├── requirements.txt
+└── pyproject.toml
+```
+# 🚀 Installation
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/sshemanth/trust-admet.git
+cd trust-admet
 ```
 
 ---
 
-# 🚀 Installation
+## Create Environment
 
-Clone the repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/trust-admet.git
-
-cd trust-admet
-```
-
-Create environment
+Using Conda:
 
 ```bash
 conda env create -f environment.yml
-
 conda activate trust-admet
 ```
 
-Install
+Or using pip:
 
 ```bash
+python -m venv .venv
+
+source .venv/bin/activate      # Linux/macOS
+
+# Windows
+# .venv\Scripts\activate
+
+pip install -r requirements.txt
 pip install -e .
+```
+
+---
+
+## Verify Installation
+
+```bash
+python -c "import trust_admet; print('TRUST-ADMET installed successfully!')"
 ```
 
 ---
 
 # ⚡ Quick Start
 
-Download datasets
+## 1. Download datasets
 
 ```bash
 python scripts/download_data.py
 ```
 
-Validate
+---
+
+## 2. Validate datasets
 
 ```bash
 python scripts/validate_datasets.py
 ```
 
-Train Random Forest
+---
+
+## 3. Train a Classical Machine Learning model
+
+Random Forest
 
 ```bash
 python scripts/train_classical_baseline.py \
@@ -193,7 +299,38 @@ python scripts/train_classical_baseline.py \
     --model random_forest
 ```
 
-Run GIN
+XGBoost
+
+```bash
+python scripts/train_classical_baseline.py \
+    --dataset BBBP \
+    --split scaffold \
+    --model xgboost
+```
+
+---
+
+## 4. Train Neural Network
+
+```bash
+python scripts/train_mlp.py \
+    --dataset BBBP \
+    --split scaffold
+```
+
+---
+
+## 5. Train Graph Neural Networks
+
+GCN
+
+```bash
+python scripts/run_gcn_experiment.py \
+    --model gcn \
+    --dataset BBBP
+```
+
+GIN
 
 ```bash
 python scripts/run_gcn_experiment.py \
@@ -201,13 +338,53 @@ python scripts/run_gcn_experiment.py \
     --dataset BBBP
 ```
 
-Generate Leaderboard
+---
+
+## 6. Fine-tune ChemBERTa
+
+```bash
+python scripts/run_chemberta_experiment.py \
+    --dataset BBBP \
+    --split scaffold
+```
+
+---
+
+# 📊 Benchmark Generation
+
+Generate benchmark tables
 
 ```bash
 python scripts/generate_leaderboard.py
 ```
 
-Generate Paper Assets
+Generate calibration analysis
+
+```bash
+python scripts/analyze_calibration.py
+```
+
+Generate applicability-domain analysis
+
+```bash
+python scripts/analyze_applicability_domain.py
+```
+
+Generate uncertainty analysis
+
+```bash
+python scripts/summarize_uncertainty.py
+```
+
+Generate explainability reports
+
+```bash
+python scripts/run_shap_classical.py
+python scripts/run_integrated_gradients.py
+python scripts/run_gnnexplainer_gin.py
+```
+
+Generate publication assets
 
 ```bash
 python scripts/generate_paper_assets.py
@@ -215,101 +392,160 @@ python scripts/generate_paper_assets.py
 
 ---
 
-# 📈 Results
+# 🧪 Single Molecule Prediction
 
-Example benchmark metrics
+Predict a single molecule from the command line.
 
-| Dataset | Model | AUROC |
-|----------|--------|-------:|
-| BBBP | Random Forest | **0.88** |
-| BBBP | XGBoost | **0.87** |
-| BBBP | GIN | **0.86** |
-| BBBP | ChemBERTa | **0.83** |
+```bash
+python scripts/predict_single.py \
+    --smiles "CCO" \
+    --dataset BBBP \
+    --split scaffold \
+    --model random_forest
+```
 
-(Multi-seed benchmark results are available in the `paper/tables/` directory.)
+Example output
 
----
+```text
+Prediction : BBB Permeable
 
-# 🔬 Explainability
+Probability : 0.97
 
-TRUST-ADMET supports multiple explanation techniques.
+Conformal Prediction Set:
+{BBB Permeable}
 
-| Model | Method |
-|---------|----------|
-| Random Forest | SHAP |
-| XGBoost | Feature Importance |
-| MLP | Integrated Gradients |
-| GIN | GNNExplainer |
-| ChemBERTa | Token Integrated Gradients |
+Applicability Domain:
+Inside
 
----
-
-# 📊 Generated Paper Assets
-
-The framework automatically generates:
-
-✅ Benchmark Tables
-
-✅ Calibration Figures
-
-✅ Applicability Domain Analysis
-
-✅ Uncertainty Analysis
-
-✅ Explainability Figures
-
-✅ TRUST Profiles
-
----
-
-# 📜 Reproducibility
-
-All experiments are
-
-- ✅ Version controlled
-- ✅ Multi-seed
-- ✅ Automatically logged with ClearML
-- ✅ Configuration driven
-- ✅ Reproducible
-
----
-
-# 📚 Citation
-
-If you use TRUST-ADMET in your research please cite
-
-```bibtex
-@software{trustadmet2026,
-  title={TRUST-ADMET},
-  author={Sri Sai Hemanth Bollepalli},
-  year={2026},
-  url={https://github.com/sshemanth/trust-admet}
-}
+Recommendation:
+Accept prediction.
 ```
 
 ---
 
-# 🤝 Contributing
+# 🎨 Interactive Gradio Application
 
-Pull requests are welcome.
+Launch
 
-For major changes please open an issue first to discuss what you would like to change.
+```bash
+python app/gradio_app.py
+```
+
+Open
+
+```
+http://localhost:7860
+```
+
+Features
+
+* Interactive molecular prediction
+* TRUST profile
+* Applicability-domain analysis
+* Conformal prediction
+* Ensemble agreement
+* JSON export
 
 ---
 
-# 📄 License
+# ⚡ FastAPI REST API
 
-MIT License
+Start server
+
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+Interactive documentation
+
+```
+http://localhost:8000/docs
+```
+
+Health endpoint
+
+```bash
+curl http://localhost:8000/health
+```
+
+Prediction endpoint
+
+```bash
+curl -X POST http://localhost:8000/predict \
+-H "Content-Type: application/json" \
+-d '{
+    "smiles":"CCO",
+    "dataset":"BBBP",
+    "split":"scaffold",
+    "model":"random_forest"
+}'
+```
 
 ---
 
-<div align="center">
+# 🐳 Docker Deployment
 
-## ⭐ If you find TRUST-ADMET useful, please consider giving the repository a star ⭐
+Build
 
-Made with ❤️ for Trustworthy AI in Drug Discovery
+```bash
+docker compose build
+```
 
-</div>
+Launch
+
+```bash
+docker compose up
+```
+
+API
+
+```
+http://localhost:8000
+```
+
+Gradio
+
+```
+http://localhost:7860
+```
+
+---
+
+# 📈 Experiment Tracking
+
+Experiments are automatically tracked using **ClearML**.
+
+Tracked information includes
+
+* Hyperparameters
+* Training metrics
+* Validation metrics
+* Model checkpoints
+* System information
+* Figures
+* Tables
+
+This enables complete experiment reproducibility.
+
+---
+
+# 📄 Reproducibility
+
+TRUST-ADMET emphasizes reproducible research.
+
+Every experiment includes
+
+* Configuration-driven execution
+* Fixed random seeds
+* Dataset validation
+* Canonical preprocessing
+* Version-controlled code
+* Automated experiment logging
+* Generated figures and tables
+* Benchmark reports
+
+All reported results can be regenerated using the provided scripts.
+
 
 <!-- BENCHMARK_RESULTS_START -->
 # 📊 Benchmark Results
