@@ -100,7 +100,7 @@ nvidia-nvtx-cu12==12.4.127
 omegaconf==2.3.1
 openpyxl==3.1.5
 orderedmultidict==1.0.2
-packaging @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_packaging_1777103621/work
+packaging>=24.0
 pandas==2.3.3
 parso==0.8.7
 pathlib2==2.3.7.post1
