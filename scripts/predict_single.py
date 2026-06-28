@@ -86,6 +86,18 @@ def print_report(result):
     if "conformal_prediction_set" in result:
         print(f"Conformal Set            : {result['conformal_prediction_set']}")
     print()
+
+    if "ensemble" in result:
+        ens = result["ensemble"]
+        print("Ensemble")
+        print("--------")
+        print(f"Mean Probability BBB+   : {ens['ensemble_probability_positive']:.3f}")
+        print(f"Disagreement Std        : {ens['ensemble_std']:.3f}")
+        print(f"Model Agreement         : {ens['ensemble_agreement']:.2f}")
+        for m in ens["models"]:
+            print(f"- {m['model']}: {m['probability_positive']:.3f}")
+        print()
+
     print("TRUST Score")
     print("-----------")
     print(f"Total                    : {result['trust_score']:.1f} / 100")
