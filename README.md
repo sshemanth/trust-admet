@@ -310,3 +310,53 @@ MIT License
 Made with ❤️ for Trustworthy AI in Drug Discovery
 
 </div>
+
+<!-- BENCHMARK_RESULTS_START -->
+# 📊 Benchmark Results
+
+TRUST-ADMET evaluates multiple model families across ADMET classification and regression tasks. The tables below report **scaffold split test performance** as **mean ± standard deviation** across available seeds.
+
+## Classification Tasks
+
+| Dataset | Model | Seeds | AUROC | AUPRC | MCC | ECE |
+|---|---:|---:|---:|---:|---:|---:|
+| BBBP | Random Forest | 5 | 0.874 ± 0.005 | 0.951 ± 0.002 | 0.547 ± 0.009 | 0.061 ± 0.016 |
+| BBBP | MLP | 5 | 0.866 ± 0.000 | 0.945 ± 0.000 | 0.516 ± 0.000 | 0.132 ± 0.000 |
+| BBBP | XGBoost | 5 | 0.866 ± 0.004 | 0.950 ± 0.002 | 0.565 ± 0.034 | 0.087 ± 0.007 |
+| BBBP | ChemBERTa | 1 | 0.826 ± 0.000 | 0.920 ± 0.000 | 0.557 ± 0.000 | 0.069 ± 0.000 |
+| BBBP | GIN | 5 | 0.823 ± 0.069 | 0.918 ± 0.037 | 0.473 ± 0.077 | 0.112 ± 0.037 |
+| BBBP | GCN | 1 | 0.710 ± 0.000 | 0.859 ± 0.000 | 0.247 ± 0.000 | 0.046 ± 0.000 |
+| ClinTox | GIN | 5 | 0.844 ± 0.019 | 0.390 ± 0.056 | 0.321 ± 0.116 | 0.057 ± 0.012 |
+| ClinTox | Random Forest | 5 | 0.772 ± 0.011 | 0.495 ± 0.015 | 0.102 ± 0.140 | 0.037 ± 0.002 |
+| ClinTox | XGBoost | 5 | 0.764 ± 0.010 | 0.479 ± 0.007 | 0.500 ± 0.026 | 0.070 ± 0.004 |
+| ClinTox | MLP | 5 | 0.680 ± 0.000 | 0.330 ± 0.000 | 0.254 ± 0.000 | 0.101 ± 0.000 |
+| Tox21 NR-AR | Random Forest | 5 | 0.769 ± 0.013 | 0.461 ± 0.004 | 0.533 ± 0.012 | 0.025 ± 0.001 |
+| Tox21 NR-AR | GIN | 5 | 0.764 ± 0.013 | 0.384 ± 0.053 | 0.430 ± 0.039 | 0.019 ± 0.004 |
+| Tox21 NR-AR | XGBoost | 5 | 0.756 ± 0.006 | 0.427 ± 0.007 | 0.503 ± 0.008 | 0.018 ± 0.002 |
+| Tox21 NR-AR | MLP | 5 | 0.667 ± 0.000 | 0.412 ± 0.000 | 0.000 ± 0.000 | 0.023 ± 0.000 |
+| Tox21 SR-p53 | XGBoost | 5 | 0.753 ± 0.005 | 0.337 ± 0.006 | 0.194 ± 0.009 | 0.067 ± 0.002 |
+| Tox21 SR-p53 | Random Forest | 5 | 0.745 ± 0.005 | 0.378 ± 0.007 | 0.241 ± 0.000 | 0.032 ± 0.002 |
+| Tox21 SR-p53 | GIN | 5 | 0.702 ± 0.011 | 0.296 ± 0.023 | 0.117 ± 0.107 | 0.046 ± 0.007 |
+| Tox21 SR-p53 | MLP | 5 | 0.610 ± 0.000 | 0.272 ± 0.000 | 0.223 ± 0.000 | 0.108 ± 0.000 |
+
+## Regression Tasks
+
+| Dataset | Model | Seeds | RMSE | MAE | R² |
+|---|---:|---:|---:|---:|---:|
+| Lipophilicity | GIN | 5 | 0.748 ± 0.012 | 0.582 ± 0.013 | 0.604 ± 0.013 |
+| Lipophilicity | XGBoost | 5 | 0.890 ± 0.007 | 0.687 ± 0.006 | 0.440 ± 0.008 |
+| Lipophilicity | MLP | 5 | 0.903 ± 0.000 | 0.696 ± 0.000 | 0.423 ± 0.000 |
+| Lipophilicity | ChemBERTa | 1 | 0.912 ± 0.000 | 0.723 ± 0.000 | 0.411 ± 0.000 |
+| Lipophilicity | Random Forest | 5 | 0.966 ± 0.003 | 0.739 ± 0.002 | 0.341 ± 0.003 |
+| Solubility | GIN | 5 | 1.843 ± 0.085 | 1.385 ± 0.117 | 0.347 ± 0.061 |
+| Solubility | XGBoost | 5 | 1.893 ± 0.010 | 1.473 ± 0.005 | 0.312 ± 0.007 |
+| Solubility | MLP | 5 | 1.950 ± 0.000 | 1.495 ± 0.000 | 0.270 ± 0.000 |
+| Solubility | Random Forest | 5 | 2.024 ± 0.003 | 1.554 ± 0.004 | 0.213 ± 0.003 |
+
+## Key Findings
+
+- Classical models remain highly competitive on BBBP scaffold evaluation.
+- GIN provides strong regression performance on Lipophilicity and Solubility.
+- Model performance varies across tasks, supporting model-family comparison rather than assuming one architecture is universally superior.
+- Calibration, applicability-domain analysis, conformal prediction, ensemble agreement, uncertainty, and explainability are essential for trust-aware ADMET prediction.
+<!-- BENCHMARK_RESULTS_END -->
