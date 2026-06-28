@@ -7,7 +7,7 @@ import torch
 from clearml import Task
 
 from trust_admet.data.graph_dataset import MoleculeGraphDataset, make_graph_loader
-from trust_admet.models.gnn import GCNModel
+from trust_admet.models.gnn import GCNModel, GINModel
 from trust_admet.utils.metrics import classification_metrics, regression_metrics
 from trust_admet.utils.calibration import calibration_metrics
 
@@ -61,6 +61,7 @@ def main():
     parser.add_argument("--hidden_dim", type=int, default=128)
     parser.add_argument("--num_layers", type=int, default=3)
     parser.add_argument("--dropout", type=float, default=0.2)
+    parser.add_argument("--model", default="gcn", choices=["gcn", "gin"])
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
@@ -74,7 +75,7 @@ def main():
 
     task = Task.init(
         project_name="TRUST-ADMET/GNN",
-        task_name=f"gcn_{args.dataset}_{args.split}_seed{args.seed}",
+        task_name=f"{args.model}_{args.dataset}_{args.split}_seed{args.seed}",
     )
     task.connect(vars(args))
 
@@ -91,7 +92,9 @@ def main():
     input_dim = train_ds[0].x.shape[1]
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    model = GCNModel(
+    model_cls = GCNModel if args.model == "gcn" else GINModel
+
+    model = model_cls(
         input_dim=input_dim,
         hidden_dim=args.hidden_dim,
         num_layers=args.num_layers,
@@ -101,7 +104,7 @@ def main():
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
-    output_dir = Path("outputs/models") / args.dataset / args.split / "gcn" / f"seed{args.seed}"
+    output_dir = Path("outputs/models") / args.dataset / args.split / args.model / f"seed{args.seed}"
     output_dir.mkdir(parents=True, exist_ok=True)
     best_path = output_dir / "best_model.pt"
 
