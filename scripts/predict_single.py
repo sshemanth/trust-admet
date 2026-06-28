@@ -64,18 +64,27 @@ def main():
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
-    result = predict_with_trust(
-        smiles=args.smiles,
-        dataset=args.dataset,
-        split=args.split,
-        model_name=args.model,
-        seed=args.seed,
-    )
+    try:
+        result = predict_with_trust(
+            smiles=args.smiles,
+            dataset=args.dataset,
+            split=args.split,
+            model_name=args.model,
+            seed=args.seed,
+        )
 
-    if args.json:
-        print(json.dumps(result, indent=2))
-    else:
-        print_report(result)
+        if args.json:
+            print(json.dumps(result, indent=2))
+        else:
+            print_report(result)
+
+    except ValueError as e:
+        print("=" * 70)
+        print("TRUST-ADMET INPUT ERROR")
+        print("=" * 70)
+        print(str(e))
+        print("Please enter a valid molecular SMILES string.")
+        print("=" * 70)
 
 
 if __name__ == "__main__":
