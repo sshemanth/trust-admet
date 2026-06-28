@@ -8,6 +8,7 @@ from sklearn.metrics import pairwise_distances
 from trust_admet.data.featurize import dataframe_to_fingerprints
 from trust_admet.trust.trust_score import TrustScore
 from trust_admet.trust.physchem_ad import check_physchem_ad
+from trust_admet.trust.conformal import load_or_build_conformal_threshold, conformal_prediction_set
 
 
 def validate_smiles(smiles: str) -> str:
@@ -117,6 +118,9 @@ def predict_with_trust(
     uncertainty = probability_uncertainty(prob)
     ece = get_model_ece(dataset, split, model_name, seed)
 
+    qhat = load_or_build_conformal_threshold(dataset, split, model_name, seed, alpha=0.05)
+    prediction_set = conformal_prediction_set(prob, qhat)
+
     score = TrustScore(
         probability=prediction_confidence,
         similarity=similarity,
@@ -138,9 +142,12 @@ def predict_with_trust(
         "applicability_domain": ("Physchem warning" if n_physchem_violations == 1 else ("Inside" if similarity >= 0.5 else "Outside")),
         "uncertainty": uncertainty,
         "ece": ece,
+        "conformal_alpha": 0.05,
+        "conformal_qhat": qhat,
+        "conformal_prediction_set": prediction_set,
         "trust_score": score.total,
         "trust_level": score.level,
-        "recommendation": ("Prediction allowed with physicochemical AD warning." if n_physchem_violations == 1 else score.recommendation),
+        "recommendation": ("Prediction allowed with physicochemical AD warning." if n_physchem_violations == 1 else ("Accept prediction." if len(prediction_set) == 1 else "Review manually: conformal prediction set is uncertain.")),
         "physchem_ad": physchem_ad,
         "score_breakdown": {
             "prediction_confidence": score.confidence_component(),

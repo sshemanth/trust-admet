@@ -83,6 +83,8 @@ def print_report(result):
     print(f"Class                    : {result['label']}")
     print(f"Probability BBB+         : {result['probability_positive']:.3f}")
     print(f"Prediction Confidence    : {result['prediction_confidence']:.3f}")
+    if "conformal_prediction_set" in result:
+        print(f"Conformal Set            : {result['conformal_prediction_set']}")
     print()
     print("TRUST Score")
     print("-----------")
@@ -102,6 +104,8 @@ def print_report(result):
     print(f"Nearest Similarity       : {result['nearest_similarity']:.3f}")
     print(f"Uncertainty              : {result['uncertainty']:.3f}")
     print(f"ECE                      : {result['ece']:.3f}")
+    if "conformal_qhat" in result:
+        print(f"Conformal qhat           : {result['conformal_qhat']:.3f}")
     print()
     print("Recommendation")
     print("--------------")
