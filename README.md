@@ -18,6 +18,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Deployment-2496ED?logo=docker\&logoColor=white)]()
 [![ClearML](https://img.shields.io/badge/ClearML-Experiment%20Tracking-blue)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-success.svg)]()
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20997792.svg)](https://doi.org/10.5281/zenodo.20997792)
 
 </p>
 
