@@ -4,6 +4,106 @@ import gradio as gr
 from trust_admet.trust.trust_engine import predict_with_trust
 
 
+def fmt(value, digits=3):
+    if value is None:
+        return "N/A"
+    return f"{value:.{digits}f}"
+
+
+def render_refused(result):
+    report = f"""
+# ❌ Prediction Refused
+
+## Input Molecule
+**SMILES:** `{result['smiles']}`
+
+## Reason
+{result['recommendation']}
+
+## Applicability Domain
+**Status:** {result['applicability_domain']}
+
+## Violations
+"""
+
+    violations = result.get("physchem_ad", {}).get("violations", [])
+
+    if violations:
+        for v in violations:
+            report += (
+                f"\n- **{v['descriptor']}**: "
+                f"{v['value']:.2f} "
+                f"(allowed {v['min']:.2f} to {v['max']:.2f})"
+            )
+    else:
+        report += "\nNo detailed violations available."
+
+    return (
+        "REFUSED",
+        "N/A",
+        "0 / 100",
+        "REFUSED",
+        result.get("applicability_domain", "Outside"),
+        "N/A",
+        report,
+        json.dumps(result, indent=2),
+    )
+
+
+def render_accepted(result):
+    breakdown = result["score_breakdown"]
+    ensemble = result.get("ensemble", {})
+
+    report = f"""
+# TRUST-ADMET Report
+
+## Input Molecule
+**SMILES:** `{result['smiles']}`
+
+## Prediction
+**Class:** {result['label']}  
+**Probability BBB+:** {fmt(result['probability_positive'])}  
+**Prediction Confidence:** {fmt(result['prediction_confidence'])}  
+**Conformal Set:** {result.get('conformal_prediction_set', 'N/A')}
+
+## Ensemble
+**Mean Probability BBB+:** {fmt(ensemble.get('ensemble_probability_positive'))}  
+**Disagreement Std:** {fmt(ensemble.get('ensemble_std'))}  
+**Model Agreement:** {fmt(ensemble.get('ensemble_agreement'), 2)}
+
+## TRUST Score
+**Total:** {fmt(result['trust_score'], 1)} / 100  
+**Level:** {result['trust_level']}
+
+## Breakdown
+- Prediction Confidence: {fmt(breakdown['prediction_confidence'], 1)} / 25
+- Calibration: {fmt(breakdown['calibration'], 1)} / 25
+- Applicability Domain: {fmt(breakdown['applicability_domain'], 1)} / 25
+- Uncertainty: {fmt(breakdown['uncertainty'], 1)} / 25
+
+## Trust Signals
+- Applicability Domain: {result['applicability_domain']}
+- Nearest Similarity: {fmt(result['nearest_similarity'])}
+- Uncertainty: {fmt(result['uncertainty'])}
+- ECE: {fmt(result['ece'])}
+- Conformal qhat: {fmt(result.get('conformal_qhat'))}
+
+## Recommendation
+**{result['recommendation']}**
+"""
+
+    return (
+        result["label"],
+        fmt(result["probability_positive"]),
+        f"{fmt(result['trust_score'], 1)} / 100",
+        result["trust_level"],
+        result["applicability_domain"],
+        fmt(result["nearest_similarity"]),
+        report,
+        json.dumps(result, indent=2),
+    )
+
+
 def predict(smiles, dataset, split, model, seed):
     try:
         result = predict_with_trust(
@@ -14,52 +114,22 @@ def predict(smiles, dataset, split, model, seed):
             seed=str(seed),
         )
 
-        breakdown = result["score_breakdown"]
+        if result["prediction"] is None:
+            return render_refused(result)
 
-        report = f"""
-# TRUST-ADMET Report
-
-## Input Molecule
-**SMILES:** `{result['smiles']}`
-
-## Prediction
-**Class:** {result['label']}  
-**Probability BBB+:** {result['probability_positive']:.3f}  
-**Prediction Confidence:** {result['prediction_confidence']:.3f}
-
-## TRUST Score
-**Total:** {result['trust_score']:.1f} / 100  
-**Level:** {result['trust_level']}
-
-## Breakdown
-- Prediction Confidence: {breakdown['prediction_confidence']:.1f} / 25
-- Calibration: {breakdown['calibration']:.1f} / 25
-- Applicability Domain: {breakdown['applicability_domain']:.1f} / 25
-- Uncertainty: {breakdown['uncertainty']:.1f} / 25
-
-## Trust Signals
-- Applicability Domain: {result['applicability_domain']}
-- Nearest Similarity: {result['nearest_similarity']:.3f}
-- Uncertainty: {result['uncertainty']:.3f}
-- ECE: {result['ece']:.3f}
-
-## Recommendation
-**{result['recommendation']}**
-"""
-
-        return (
-            result["label"],
-            f"{result['probability_positive']:.3f}",
-            f"{result['trust_score']:.1f} / 100",
-            result["trust_level"],
-            result["applicability_domain"],
-            f"{result['nearest_similarity']:.3f}",
-            report,
-            json.dumps(result, indent=2),
-        )
+        return render_accepted(result)
 
     except Exception as e:
-        return "ERROR", "", "", "", "", "", f"Error: {e}", "{}"
+        return (
+            "ERROR",
+            "N/A",
+            "N/A",
+            "ERROR",
+            "N/A",
+            "N/A",
+            f"# Error\n\n{str(e)}",
+            "{}",
+        )
 
 
 with gr.Blocks(title="TRUST-ADMET") as demo:
@@ -69,7 +139,7 @@ with gr.Blocks(title="TRUST-ADMET") as demo:
 
 ### Trustworthy AI Framework for ADMET Prediction
 
-Enter a SMILES string and get a prediction with a TRUST Score, applicability-domain status, calibration signal, and recommendation.
+Enter a SMILES string and get a prediction with TRUST decision logic, conformal prediction, ensemble agreement, applicability-domain checks, and calibration-aware reporting.
 """
     )
 
@@ -110,5 +180,5 @@ Enter a SMILES string and get a prediction with a TRUST Score, applicability-dom
         ],
     )
 
-demo.launch(server_name="0.0.0.0", server_port=7860, share=True)
 
+demo.launch(server_name="0.0.0.0", server_port=7860, share=True)
