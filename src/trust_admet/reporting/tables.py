@@ -52,14 +52,24 @@ def build_dataset_table(qc_summary_path: Path, output_path: Path):
 def collect_baseline_metrics(models_dir: Path, output_path: Path):
     rows = []
 
-    for metrics_path in models_dir.glob("*/*/*/seed*_metrics.csv"):
+    metric_files = list(models_dir.glob("*/*/*/seed*_metrics.csv"))
+    metric_files += list(models_dir.glob("*/*/*/seed*/metrics.csv"))
+
+    for metrics_path in metric_files:
         parts = metrics_path.parts
 
-        # outputs/models/DATASET/SPLIT/MODEL/seed42_metrics.csv
-        dataset = parts[-4]
-        split = parts[-3]
-        model = parts[-2]
-        seed = metrics_path.stem.replace("_metrics", "").replace("seed", "")
+        if metrics_path.name == "metrics.csv":
+            # outputs/models/DATASET/SPLIT/MODEL/seed42/metrics.csv
+            dataset = parts[-5]
+            split = parts[-4]
+            model = parts[-3]
+            seed = parts[-2].replace("seed", "")
+        else:
+            # outputs/models/DATASET/SPLIT/MODEL/seed42_metrics.csv
+            dataset = parts[-4]
+            split = parts[-3]
+            model = parts[-2]
+            seed = metrics_path.stem.replace("_metrics", "").replace("seed", "")
 
         df = pd.read_csv(metrics_path)
         row = df.iloc[0].to_dict()
