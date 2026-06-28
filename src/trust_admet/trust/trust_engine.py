@@ -70,7 +70,9 @@ def predict_with_trust(
 
     physchem_ad = check_physchem_ad(canonical_smiles, dataset, split)
 
-    if not physchem_ad["inside_physchem_ad"]:
+    n_physchem_violations = len(physchem_ad.get("violations", []))
+
+    if n_physchem_violations >= 2:
         return {
             "smiles": canonical_smiles,
             "dataset": dataset,
@@ -87,7 +89,7 @@ def predict_with_trust(
             "ece": None,
             "trust_score": 0.0,
             "trust_level": "REFUSED",
-            "recommendation": "Prediction refused because the molecule is outside the training physicochemical applicability domain.",
+            "recommendation": "Prediction refused because the molecule violates multiple physicochemical applicability-domain limits.",
             "physchem_ad": physchem_ad,
             "score_breakdown": {
                 "prediction_confidence": 0.0,
@@ -133,12 +135,12 @@ def predict_with_trust(
         "probability_positive": prob,
         "prediction_confidence": prediction_confidence,
         "nearest_similarity": similarity,
-        "applicability_domain": "Inside" if similarity >= 0.5 else "Outside",
+        "applicability_domain": ("Physchem warning" if n_physchem_violations == 1 else ("Inside" if similarity >= 0.5 else "Outside")),
         "uncertainty": uncertainty,
         "ece": ece,
         "trust_score": score.total,
         "trust_level": score.level,
-        "recommendation": score.recommendation,
+        "recommendation": ("Prediction allowed with physicochemical AD warning." if n_physchem_violations == 1 else score.recommendation),
         "physchem_ad": physchem_ad,
         "score_breakdown": {
             "prediction_confidence": score.confidence_component(),

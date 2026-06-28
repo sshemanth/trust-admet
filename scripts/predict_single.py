@@ -10,6 +10,34 @@ def print_report(result):
     print("=" * 70)
     print("                       TRUST-ADMET REPORT")
     print("=" * 70)
+
+    if result["prediction"] is None:
+        print()
+        print("Input Molecule")
+        print("--------------")
+        print(f"SMILES                   : {result['smiles']}")
+        print()
+        print("Status")
+        print("------")
+        print("Prediction               : REFUSED")
+        print(f"Reason                   : {result['recommendation']}")
+        print()
+
+        if "physchem_ad" in result:
+            violations = result["physchem_ad"].get("violations", [])
+            if violations:
+                print("Applicability Domain Violations")
+                print("-------------------------------")
+                for v in violations:
+                    print(
+                        f"- {v['descriptor']}: "
+                        f"{v['value']:.2f} "
+                        f"(allowed {v['min']:.2f} to {v['max']:.2f})"
+                    )
+
+        print()
+        print("=" * 70)
+        return
     if result["prediction"] is None:
         print()
         print("Input Molecule")
