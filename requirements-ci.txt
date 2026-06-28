@@ -1,0 +1,13 @@
+numpy
+pandas
+scikit-learn
+scipy
+
+pytest
+joblib
+
+fastapi
+pydantic
+uvicorn
+
+requests
