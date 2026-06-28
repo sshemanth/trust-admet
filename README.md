@@ -596,3 +596,23 @@ TRUST-ADMET evaluates multiple model families across ADMET classification and re
 - Model performance varies across tasks, supporting model-family comparison rather than assuming one architecture is universally superior.
 - Calibration, applicability-domain analysis, conformal prediction, ensemble agreement, uncertainty, and explainability are essential for trust-aware ADMET prediction.
 <!-- BENCHMARK_RESULTS_END -->
+
+<!-- EXTERNAL_VALIDATION_START -->
+# 🌍 External Validation
+
+TRUST-ADMET evaluates BBBP-trained models on the independent B3DB dataset after removing molecules overlapping with the BBBP training set.
+
+| External Dataset | Train Dataset | Model | N | Removed Overlap | AUROC | AUPRC | MCC | ECE |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| B3DB | BBBP | Random Forest | 6482 | 1325 | 0.912 | 0.941 | 0.580 | 0.087 |
+| B3DB | BBBP | XGBoost | 6482 | 1325 | 0.888 | 0.914 | 0.606 | 0.096 |
+
+## External Validation Summary
+
+- B3DB molecules before overlap removal: 7,807
+- B3DB molecules after overlap removal: 6,482
+- Removed train-overlap molecules: 1,325
+- Random Forest achieved strong external generalization with AUROC above 0.91.
+- XGBoost also retained strong external performance with AUROC above 0.88.
+
+<!-- EXTERNAL_VALIDATION_END -->
