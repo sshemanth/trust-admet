@@ -1,13 +1,13 @@
 cff-version: 1.2.0
-title: TRUST-ADMET
-message: "If you use this software, please cite it."
+title: "TRUST-ADMET: A Trustworthy Artificial Intelligence Framework for ADMET Prediction"
+version: "v1.0.1"
 
 authors:
-  - family-names: Bollepalli
-    given-names: Sri Sai Hemanth
+  - family-names: "Bollepalli"
+    given-names: "Sri Sai Hemanth"
 
-version: 1.0.0
-
-license: MIT
+doi: 10.5281/zenodo.20997792
 
 repository-code: https://github.com/sshemanth/trust-admet
+
+license: MIT
