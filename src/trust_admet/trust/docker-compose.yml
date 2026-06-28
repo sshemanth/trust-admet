@@ -1,0 +1,17 @@
+services:
+  trust-admet-api:
+    build: .
+    container_name: trust-admet-api
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/src
+
+  trust-admet-gradio:
+    build: .
+    container_name: trust-admet-gradio
+    command: python app/gradio_app.py
+    ports:
+      - "7860:7860"
+    environment:
+      - PYTHONPATH=/app/src
