@@ -24,12 +24,12 @@ for keys, group in df.groupby(["dataset", "split", "model", "seed"]):
         "outside_n": int(outside["n"].iloc[0]),
     }
 
-    if pd.notna(inside["auroc"].iloc[0]):
+    if "auroc" in inside.columns and pd.notna(inside["auroc"].iloc[0]):
         row["inside_auroc"] = inside["auroc"].iloc[0]
         row["outside_auroc"] = outside["auroc"].iloc[0]
         row["auroc_gap"] = row["inside_auroc"] - row["outside_auroc"]
 
-    if pd.notna(inside["rmse"].iloc[0]):
+    if "rmse" in inside.columns and pd.notna(inside["rmse"].iloc[0]):
         row["inside_rmse"] = inside["rmse"].iloc[0]
         row["outside_rmse"] = outside["rmse"].iloc[0]
         row["rmse_gap"] = row["outside_rmse"] - row["inside_rmse"]
