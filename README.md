@@ -270,7 +270,7 @@ trust-admet/
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip setuptools wheel
+python -m pip install --upgrade pip
 ```
 
 ### Linux / macOS
@@ -278,7 +278,7 @@ python -m pip install --upgrade pip setuptools wheel
 ```bash
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip setuptools wheel
+python -m pip install --upgrade pip
 ```
 
 ## Step 4. Install TRUST-ADMET
@@ -362,6 +362,52 @@ python scripts/predict_single.py \
 ---
 
 # ⚡ Want to run it from scratch
+
+## Python Environment
+
+### Windows
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+```
+
+### Linux / macOS
+
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+```
+
+## Install TRUST-ADMET
+
+```bash
+pip install -e .
+```
+
+## Install Dependencies
+
+### Full Reproducibility
+
+```bash
+pip install -r requirements.txt
+```
+
+For full benchmark reproduction, GPU-enabled PyTorch is recommended.
+
+## Verify Installation
+
+```bash
+python -c "import trust_admet; print('TRUST-ADMET installed successfully')"
+```
+
+Expected output:
+
+```text
+TRUST-ADMET installed successfully
+```
 
 ## 1. Download datasets
 
