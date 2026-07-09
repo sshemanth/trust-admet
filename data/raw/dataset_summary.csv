@@ -1,0 +1,7 @@
+dataset,tdc_name,label_name,rows,columns,status,output
+BBBP,BBB_Martins,,2030,Drug_ID|Drug|Y,success,data/raw/BBBP.csv
+Lipophilicity,Lipophilicity_AstraZeneca,,4200,Drug_ID|Drug|Y,success,data/raw/Lipophilicity.csv
+Solubility,Solubility_AqSolDB,,9982,Drug_ID|Drug|Y,success,data/raw/Solubility.csv
+ClinTox,ClinTox,,1478,Drug_ID|Drug|Y,success,data/raw/ClinTox.csv
+Tox21_NR-AR,Tox21,NR-AR,7265,Drug_ID|Drug|Y,success,data/raw/Tox21_NR-AR.csv
+Tox21_SR-p53,Tox21,SR-p53,6774,Drug_ID|Drug|Y,success,data/raw/Tox21_SR-p53.csv

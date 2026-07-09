@@ -13,11 +13,6 @@ venv/
 trust-admet-env/
 .env.*
 
-# Data
-data/raw/
-data/processed/
-data/splits/
-
 # Generated outputs
 outputs/
 *.pt
