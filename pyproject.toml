@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trust-admet"
+version = "1.0.1"
+description = "Trust-aware ADMET prediction framework"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = {text = "MIT"}
+authors = [
+  {name = "Sri Sai Hemanth Bollepalli"}
+]
+dependencies = [
+  "numpy",
+  "pandas",
+  "scikit-learn",
+  "xgboost",
+  "rdkit",
+  "torch",
+  "torch-geometric",
+  "transformers",
+  "fastapi",
+  "uvicorn",
+  "gradio"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.urls]
+Homepage = "https://github.com/sshemanth/trust-admet"
+Repository = "https://github.com/sshemanth/trust-admet"
+DOI = "https://doi.org/10.5281/zenodo.20997792"
