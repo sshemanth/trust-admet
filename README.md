@@ -227,51 +227,141 @@ trust-admet/
 ├── requirements.txt
 └── pyproject.toml
 ```
-# 🚀 Installation
+# Reviewer Quick Start
 
-## Clone the Repository
+TRUST-ADMET can be evaluated locally on a standard CPU without requiring GPU acceleration.
+
+## Prerequisites
+
+- Python 3.11 (recommended)
+- Git
+
+## Step 1. Clone the repository
 
 ```bash
 git clone https://github.com/sshemanth/trust-admet.git
 cd trust-admet
 ```
 
----
+## Step 2. Download pretrained outputs
 
-## Create Environment
+The trained models and benchmark outputs are archived on Zenodo.
 
-Using Conda:
+1. Download the **output.zip** archive from the Zenodo release.
+2. Extract it into the repository root.
 
-```bash
-conda env create -f environment.yml
-conda activate trust-admet
+The directory structure should become:
+
+```
+trust-admet/
+│
+├── outputs/
+├── data/
+├── app/
+├── scripts/
+├── src/
+└── ...
 ```
 
-Or using pip:
+## Step 3. Create a virtual environment
+
+### Windows
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+```
+
+### Linux / macOS
 
 ```bash
-python -m venv .venv
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+```
 
-source .venv/bin/activate      # Linux/macOS
+## Step 4. Install TRUST-ADMET
 
-# Windows
-# .venv\Scripts\activate
-
-pip install -r requirements.txt
+```bash
 pip install -e .
 ```
 
----
-
-## Verify Installation
+## Step 5. Launch the Gradio interface
 
 ```bash
-python -c "import trust_admet; print('TRUST-ADMET installed successfully!')"
+python app/gradio_app.py
+```
+
+Open the local URL displayed in the terminal, typically
+
+```
+http://127.0.0.1:7860
+```
+
+## Step 6. Example molecules
+
+Example SMILES strings:
+
+```
+CCO
+CC(=O)OC1=CC=CC=C1C(=O)O
+Cn1cnc2n(C)c(=O)n(C)c(=O)c12
+```
+
+The application reports
+
+- Prediction
+- Prediction probability
+- TRUST Score
+- Trust Level
+- Applicability Domain
+- Nearest-neighbor similarity
+- Conformal prediction
+- Trust diagnostics
+
+---
+
+# Command-Line Interface
+
+Example prediction:
+
+```bash
+python scripts/predict_single.py \
+    --smiles "CCO"
+```
+
+Example with a specific benchmark:
+
+```bash
+python scripts/predict_single.py \
+    --smiles "CCO" \
+    --dataset BBBP \
+    --split scaffold \
+    --model random_forest \
+    --seed 42
+```
+
+For JSON output:
+
+```bash
+python scripts/predict_single.py \
+    --smiles "CCO" \
+    --json
 ```
 
 ---
 
-# ⚡ Quick Start
+## Notes
+
+- TRUST-ADMET has been tested with **Python 3.11**.
+- GPU hardware is **not required** for inference or reviewer testing.
+- The repository already contains the processed benchmark split files required by the demo.
+- The `output/` directory must be downloaded from the Zenodo release before launching the application.
+
+---
+
+# ⚡ Want to run it from scratch
 
 ## 1. Download datasets
 
