@@ -245,23 +245,36 @@ cd trust-admet
 
 ## Step 2. Download pretrained outputs
 
-The trained models and benchmark outputs are archived on Zenodo.
+To simplify installation and enable immediate testing, the pretrained model outputs and benchmark artifacts are provided as a public Google Drive archive.
 
-1. Download the **output.zip** archive from the Zenodo release.
-2. Extract it into the repository root.
+> **Download:**  
+> **[Google Drive](https://drive.google.com/file/d/1e5tokpfsxJapZP7OstmcJ8CimUypVqdr/view?usp=sharing)**
 
-The directory structure should become:
+Download the `output.zip` archive and extract it into the repository root.
 
-```
+The directory structure should be:
+
+```text
 trust-admet/
 │
-├── outputs/
+├── output/
 ├── data/
 ├── app/
+├── configs/
 ├── scripts/
 ├── src/
+├── tests/
+├── README.md
 └── ...
 ```
+
+The `output/` directory contains the pretrained model checkpoints, benchmark results, and assets required by the Gradio application and command-line interface.
+
+> **Note**
+>
+> - The GitHub repository contains the complete source code.
+> - The software itself is permanently archived on **Zenodo** (see DOI in the manuscript).
+> - Due to the large size of the pretrained outputs, they are distributed separately through the public Google Drive archive.
 
 ## Step 3. Create a virtual environment
 
@@ -362,6 +375,8 @@ python scripts/predict_single.py \
 ---
 
 # ⚡ Want to run it from scratch
+
+> **Note:** If you want to use the pretrained models immediately, simply download the `output.zip` archive from the Google Drive link above. The following steps are only required if you wish to reproduce the complete training pipeline from scratch.
 
 ## Python Environment
 
