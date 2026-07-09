@@ -257,7 +257,7 @@ The directory structure should be:
 ```text
 trust-admet/
 │
-├── output/
+├── outputs/
 ├── data/
 ├── app/
 ├── configs/
